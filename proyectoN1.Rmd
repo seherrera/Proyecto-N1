@@ -1,0 +1,43 @@
+---
+title: "Untitled"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=TRUE}
+
+data <- read.csv(file.choose(), sep = ";", header= TRUE )
+attach(data)
+summary(data)
+#install.packages("tidyverse")
+library(tidyverse)
+
+#filtrar las mejores hamburguesas.
+mejores_hamburguesas<- filter(data, nota >= 5)
+
+
+#separar los ingredientes de las mejores hamburguesas
+mejores_ingredientes<- strsplit(mejores_hamburguesas$Ingredientes, split=",") 
+ingredientes_separados = data.frame(unlist(mejores_ingredientes))
+
+#capitalizar los ingredientes
+library(tools)
+texto_columnas <-unlist(lapply(ingredientes_separados, FUN=toTitleCase))
+
+#contando ingredientes que se repiten
+tabla <- table(texto_columnas)
+tabla <- tibble(word = names(tabla), count = as.numeric(tabla))
+tabla <- arrange(tabla, desc(count))
+tabla
+library(ggplot2)
+gg = ggplot(data  = tabla, aes(x=word, y=count))
+gg + geom_bar(stat = "identity")
+
+#para la eleccion de la hamburguesa se utilizaran los primeros 9 ingredientes,pan de hamburguesa y hamburguesa
+hamburguesas<- filter(tabla, count>=3 )
+hamburguesas
+
+```
