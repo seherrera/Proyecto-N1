@@ -1,4 +1,5 @@
 Proyecto n1
+#Sebastian Herrera y Cristobal Paredes
 ================
 
 ``` r
