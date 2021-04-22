@@ -1,6 +1,8 @@
 ---
 title: "Proyecto n1"
 output: github_document
+#sebastian Herrera 
+#Cristobal paredes
 ---
 
 ```{r setup, include=FALSE}
