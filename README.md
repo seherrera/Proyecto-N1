@@ -50,19 +50,24 @@ library(tidyverse)
     ## x dplyr::lag()    masks stats::lag()
 
 ``` r
+###filtrar las mejores hamburguesas.
 #filtrar las mejores hamburguesas. se filtraran las mejores hamburguesas para asi ver de primera cuales son las que tienen mejores calificaciones
 mejores_hamburguesas<- filter(data, nota >= 5)
 
-
-#separar los ingredientes de las mejores hamburguesas para de esta manera tener todos los ingredientes separados y poder ver cuales son los mejores
+###separar los ingredientes de las mejores hamburguesas
+#se filtraran las mejores hamburguesas para asi ver de primera cuales son las que tienen mejores calificaciones
 mejores_ingredientes<- strsplit(mejores_hamburguesas$Ingredientes, split=",") 
 ingredientes_separados = data.frame(unlist(mejores_ingredientes))
 
+### Diminucion de ruido
 #capitalizar los ingredientes para no tener tanto ruido en los datos
+
 library(tools)
 texto_columnas <-unlist(lapply(ingredientes_separados, FUN=toTitleCase))
 
-#contando ingredientes que se repiten aqui se cuentan los ingredientes que mas se repiten para asi tener la frecuencia de estos
+###contando ingredientes
+#Aqui se cuentan los ingredientes que mas se repiten para asi tener la frecuencia de estos
+
 tabla <- table(texto_columnas)
 tabla <- tibble(word = names(tabla), count = as.numeric(tabla))
 tabla <- arrange(tabla, desc(count))
